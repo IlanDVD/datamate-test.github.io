@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Intégration iFrame Qlik Sense</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript">
+    const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
+    function login() {
+      function isLoggedIn() {
+        return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'qlik-web-integration-id': webIntegrationId,
+          },
+        }).then(response => {
+          return response.status === 200;
+        });
+      }
+      return isLoggedIn().then(loggedIn => {
+        if (!loggedIn) {
+          // check login
+            window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
+          throw new Error('not logged in');
+        }
+      });
+    }
+	login()
+  </script>
 </head>
-<body>
-    <h2>Visualisation Qlik Sense via iFrame</h2>
+
+<body style="height:600px;">
+	<h2>Visualisation Qlik Sense via iFrame</h2>
     <iframe src="https://btp-consultants.eu.qlikcloud.com/single/?appid=99a511a1-48d5-48ff-942b-947091079b87&sheet=jqyyhpq&lang=fr-FR&theme=card&opt=ctxmenu,currsel" style="border:none;width:100%;height:100%;"></iframe>
 </body>
+
 </html>
