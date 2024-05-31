@@ -1,0 +1,27 @@
+.card-image img.report-image {
+    opacity: 0.7; /* Régler la transparence de l'image */
+    transition: opacity 0.3s ease;
+}
+
+.card-image:hover img.report-image {
+    opacity: 1; /* Image devient moins transparente au survol */
+}
+
+/* Ajoutez ici les autres styles personnalisés que vous souhaitez */
+.image.is-4by3 {
+    position: relative;
+    overflow: hidden;
+}
+
+.has-logo .logo-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.has-logo .logo-container .logo {
+    height: 30px; /* Ajustez ceci selon la taille souhaitée */
+    width: auto;
+    display: block; /* Cela garantit que l'image du logo est affichée comme un bloc et prend la taille définie */
+}
