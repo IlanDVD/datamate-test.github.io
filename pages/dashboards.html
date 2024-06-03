@@ -17,10 +17,20 @@
       display: flex;
       flex-direction: column;
     }
-    h2 {
-      margin: 0;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 10px;
-      text-align: center;
+      background-color: #f0f0f0;
+    }
+    .title {
+      margin: 0;
+    }
+    .selected-view {
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
     }
     .button-container {
       display: flex;
@@ -63,8 +73,9 @@
       });
     }
 
-    function switchIframe(sheet_id) {
+    function switchIframe(src, viewName) {
       document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=35edaaaa-a600-4970-a7dd-d71c5c0bede3&sheet="+sheet_id+"&theme=horizon&opt=ctxmenu,currsel";
+      document.getElementById('selectedView').textContent = viewName;
     }
 
     login();
@@ -72,7 +83,9 @@
 </head>
 
 <body>
-  <h2>Visualisation Qlik Sense via iFrame</h2>
+  <div class="header">
+    <h2 class="title">Datamate</h2>
+    <p id="selectedView" class="selected-view">Select a view</p>
   <div class="button-container">
     <button onclick="switchIframe('jkmQPj')">DPE</button>
     <button onclick="switchIframe('NAaJTZQ')">Autorisation urbanisme</button>
