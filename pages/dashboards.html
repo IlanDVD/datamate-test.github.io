@@ -22,6 +22,17 @@
       padding: 10px;
       text-align: center;
     }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .button-container button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
     iframe {
       flex: 1;
       border: none;
@@ -29,6 +40,7 @@
   </style>
   <script type="text/javascript">
     const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
+
     function login() {
       function isLoggedIn() {
         return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
@@ -45,19 +57,28 @@
       }
       return isLoggedIn().then(loggedIn => {
         if (!loggedIn) {
-          // check login
-            window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
+          window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
           throw new Error('not logged in');
         }
       });
     }
-    login()
+
+    function switchIframe(sheet_id) {
+      document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=35edaaaa-a600-4970-a7dd-d71c5c0bede3&sheet="+sheet_id+"&theme=horizon&opt=ctxmenu,currsel";
+    }
+
+    login();
   </script>
 </head>
 
 <body>
   <h2>Visualisation Qlik Sense via iFrame</h2>
-  <iframe src="https://btp-consultants.eu.qlikcloud.com/single/?appid=35edaaaa-a600-4970-a7dd-d71c5c0bede3&sheet=jkmQPj&theme=horizon&opt=ctxmenu,currsel"></iframe>
+  <div class="button-container">
+    <button onclick="switchIframe('jkmQPj')">DPE</button>
+    <button onclick="switchIframe('NAaJTZQ')">Autorisation urbanisme</button>
+    <button onclick="switchIframe('yJDntY')">RPLS</button>
+  </div>
+  <iframe id="mainIframe" src="https://btp-consultants.eu.qlikcloud.com/single/?appid=35edaaaa-a600-4970-a7dd-d71c5c0bede3&sheet=jkmQPj&theme=horizon&opt=ctxmenu,currsel"></iframe>
 </body>
 
 </html>
