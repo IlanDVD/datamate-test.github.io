@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script type="text/javascript">
-    const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
-    function login() {
-      function isLoggedIn() {
-        return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
-          method: 'GET',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            'qlik-web-integration-id': webIntegrationId,
-          },
-        }).then(response => {
-          return response.status === 200;
-        });
-      }
-      return isLoggedIn().then(loggedIn => {
-        if (!loggedIn) {
-          // check login
-            window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
-          throw new Error('not logged in');
-        }
-      });
-    }
-	login()
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="home.css">
 </head>
-
-<body style="height:600px;">
-	<h2>Visualisation Qlik Sense via iFrame</h2>
-    <iframe src="https://btp-consultants.eu.qlikcloud.com/single/?appid=99a511a1-48d5-48ff-942b-947091079b87&sheet=jqyyhpq&lang=fr-FR&theme=card&opt=ctxmenu,currsel" style="border:none;width:100%;height:400%;"></iframe>
+<body>
+    <section class="section">
+        <div class="container">
+            <a href="/pages/home.html">
+                <img src="https://www.databuildr.com/hs-fs/hubfs/DATABUILDER_LOGOS_DatabuildR_Logo_Couleur.png?width=405&height=50&name=DATABUILDER_LOGOS_DatabuildR_Logo_Couleur.png" alt="Logo de l'entreprise" id="logo">
+            </a>
+            
+            <h1 class="title">Rapports automatiques</h1>
+  
+            
+            <div class="columns is-multiline">
+                <!-- Les cartes individuelles iront ici -->
+                <div class="column is-one-third">
+                    <a href="../index_old.html">
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-4by3">
+                                    <img src="https://hs.bleexo.com/hubfs/L%E2%80%99int%C3%A9gration%20au%20service%20de%20la%20performance%20en%20entreprise%20-1.jpg" alt="Performance" class="report-image">
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <h2>Performance programme</h2>
+                                    Données permettant d'identifier des leviers d'optimisation pour chaque niveau du projet
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-
 </html>
