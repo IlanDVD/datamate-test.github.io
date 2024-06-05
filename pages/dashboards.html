@@ -59,34 +59,88 @@
     }
   </style>
   <script type="text/javascript">
-    const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
-
     function login() {
-      function isLoggedIn() {
-        return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
-          method: 'GET',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            'qlik-web-integration-id': webIntegrationId,
-          },
-        }).then(response => {
-          return response.status === 200;
-        });
-      }
-      return isLoggedIn().then(loggedIn => {
-        if (!loggedIn) {
-          window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
-          throw new Error('not logged in');
+    const webIntegrationId = 'YOUR_WEB_INTEGRATION_ID';
+    const loginUrl = 'https://btp-consultants.eu.qlikcloud.com/login';
+    const apiUrl = 'https://btp-consultants.eu.qlikcloud.com/api/v1/users/me';
+    const credentials = {
+      username: 'YOUR_USERNAME',
+      password: 'YOUR_PASSWORD',
+    };
+
+    function isLoggedIn() {
+      return fetch(apiUrl, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'qlik-web-integration-id': webIntegrationId,
+        },
+      }).then(response => {
+        return response.status === 200;
+      });
+    }
+
+    function performLogin() {
+      return fetch(loginUrl, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'qlik-web-integration-id': webIntegrationId,
+        },
+        body: JSON.stringify(credentials),
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Login failed');
         }
       });
     }
 
-    function switchIframe(sheet_id, viewName) {
-      document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
-      document.getElementById('selectedView').textContent = viewName;
-    }
+    return isLoggedIn().then(loggedIn => {
+      if (!loggedIn) {
+        return performLogin().then(() => {
+          window.top.location.href = "https://btp-consultants.eu.qlikcloud.com?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
+        }).catch(error => {
+          console.error('Login error:', error);
+          throw new Error('not logged in');
+        });
+      }
+    });
+  }
+
+  // Call the login function to initiate login process
+  login();
+  
+    // const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
+
+    // function login() {
+    //   function isLoggedIn() {
+    //     return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
+    //       method: 'GET',
+    //       mode: 'cors',
+    //       credentials: 'include',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'qlik-web-integration-id': webIntegrationId,
+    //       },
+    //     }).then(response => {
+    //       return response.status === 200;
+    //     });
+    //   }
+    //   return isLoggedIn().then(loggedIn => {
+    //     if (!loggedIn) {
+    //       window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
+    //       throw new Error('not logged in');
+    //     }
+    //   });
+    // }
+
+    // function switchIframe(sheet_id, viewName) {
+    //   document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
+    //   document.getElementById('selectedView').textContent = viewName;
+    // }
 
     // login();
   </script>
