@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script src="https://unpkg.com/enigma.js/enigma.min.js"></script>
+</head>
+<body>
+    <div id="main">
+        <iframe id='qlik_frame' style='border:none;width:100%;height:900px;'></iframe>
+    </div>
+    <script>
+        const TENANT = 'btp-consultants.eu.qlikcloud.com';
+        const JWT_ENDPOINT = 'http://localhost:3000/generate-token';
+        const WEB_INTEGRATION_ID = 'MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg';
+        const APPID = '89536f44-d98d-446c-b77e-97a7038d2768';
+        const SHEETID = 'jkmQPj';
+
+        (async function main() {
+            const tokenRes = await fetch(JWT_ENDPOINT);
+            const token = await tokenRes.json();
+            const loginRes = await fetch(`https://${TENANT}/login/jwt-session?qlik-web-integration-id=${WEB_INTEGRATION_ID}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'qlik-web-integration-id': WEB_INTEGRATION_ID
+                },
+                credentials: 'include'
+            });
+            if (loginRes.ok) {
+                document.getElementById('qlik_frame').src = `https://${TENANT}/single/?appid=${APPID}&sheet=${SHEETID}`;
+            } else {
+                console.error('Login failed');
+            }
+        })();
+    </script>
+</body>
+</html>
