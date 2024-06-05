@@ -1,11 +1,7 @@
 <html>
-<head>
-    <script src="https://unpkg.com/enigma.js/enigma.min.js"></script>
-</head>
-<body>
-    <div id="main">
-        <iframe id='qlik_frame' style='border:none;width:100%;height:900px;'></iframe>
-    </div>
+    <head>
+        <script src="https://unpkg.com/enigma.js/enigma.min.js"></script>
+    </head>
     <script>
         const TENANT = 'btp-consultants.eu.qlikcloud.com';
         const JWT_ENDPOINT = 'http://localhost:3000/generate-token';
@@ -31,5 +27,25 @@
             }
         })();
     </script>
-</body>
+    <script type="text/javascript">
+        function switchIframe(sheet_id, viewName) {
+          document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
+          document.getElementById('selectedView').textContent = viewName;
+        }
+    </script>
+    <body>
+        <div class="header">
+        <a href="../index.html">
+            <img src="https://www.databuildr.com/hs-fs/hubfs/DATABUILDER_LOGOS_DatabuildR_Logo_Couleur.png?width=405&height=50&name=DATABUILDER_LOGOS_DatabuildR_Logo_Couleur.png" alt="Logo de l'entreprise" class="logo">
+        </a>
+        <h2 class="title">Datamate</h2>
+        <p id="selectedView" class="selected-view">Select a view</p>
+        </div>
+        <div class="button-container">
+        <button onclick="switchIframe('jkmQPj', 'DPE')">DPE</button>
+        <button onclick="switchIframe('NAaJTZQ', 'Autorisation urbanisme')">Autorisation urbanisme</button>
+        <button onclick="switchIframe('yJDntY', 'RPLS')">RPLS</button>
+        </div>
+        <iframe id="mainIframe" src="https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet=jkmQPj&theme=sense&opt=ctxmenu,currsel"></iframe>
+    </body>
 </html>
