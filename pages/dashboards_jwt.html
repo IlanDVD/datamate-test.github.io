@@ -1,38 +1,44 @@
 <html>
     <head>
         <script src="https://unpkg.com/enigma.js/enigma.min.js"></script>
-    </head>
-    <script>
-        const TENANT = 'btp-consultants.eu.qlikcloud.com';
-        const JWT_ENDPOINT = 'http://localhost:3000/generate-token';
-        const WEB_INTEGRATION_ID = 'MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg';
-        const APPID = '89536f44-d98d-446c-b77e-97a7038d2768';
-        const SHEETID = 'jkmQPj';
-
-        (async function main() {
-            const tokenRes = await fetch(JWT_ENDPOINT);
-            const token = await tokenRes.json();
-            const loginRes = await fetch(`https://${TENANT}/login/jwt-session?qlik-web-integration-id=${WEB_INTEGRATION_ID}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'qlik-web-integration-id': WEB_INTEGRATION_ID
-                },
-                credentials: 'include'
-            });
-            if (loginRes.ok) {
-                document.getElementById('qlik_frame').src = `https://${TENANT}/single/?appid=${APPID}&sheet=${SHEETID}`;
-            } else {
-                console.error('Login failed');
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="dashboards.css">
+        <script>
+            const TENANT = 'btp-consultants.eu.qlikcloud.com';
+            const JWT_ENDPOINT = 'http://localhost:3000/generate-token';
+            const WEB_INTEGRATION_ID = 'MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg';
+            const APPID = '89536f44-d98d-446c-b77e-97a7038d2768';
+            const SHEETID = 'jkmQPj';
+    
+            (async function main() {
+                const tokenRes = await fetch(JWT_ENDPOINT);
+                const token = await tokenRes.json();
+                const loginRes = await fetch(`https://${TENANT}/login/jwt-session?qlik-web-integration-id=${WEB_INTEGRATION_ID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'qlik-web-integration-id': WEB_INTEGRATION_ID
+                    },
+                    credentials: 'include'
+                });
+                if (loginRes.ok) {
+                    document.getElementById('qlik_frame').src = `https://${TENANT}/single/?appid=${APPID}&sheet=${SHEETID}`;
+                } else {
+                    console.error('Login failed');
+                }
+            })();
+        </script>
+        <script type="text/javascript">
+            function switchIframe(sheet_id, viewName) {
+              document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
+              document.getElementById('selectedView').textContent = viewName;
             }
-        })();
-    </script>
-    <script type="text/javascript">
-        function switchIframe(sheet_id, viewName) {
-          document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
-          document.getElementById('selectedView').textContent = viewName;
-        }
-    </script>
+        </script>
+    </head>
     <body>
         <div class="header">
         <a href="../index.html">
