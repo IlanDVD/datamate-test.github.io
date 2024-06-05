@@ -1,151 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background-color: #ffffff;
-      position: relative;
-    }
-    .logo {
-      height: 50px;
-    }
-    .title {
-      margin: 0;
-      padding-left: 10px;
-    }
-    .selected-view {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 0;
-      font-size: 24px;
-      font-weight: bold;
-      font-family: 'Roboto', sans-serif;
-    }
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin: 10px 0;
-    }
-    .button-container button {
-      margin: 0 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    iframe {
-      flex: 1;
-      border: none;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components"
+    data-host="https://btp-consultants.eu.qlikcloud.com"
+    data-client-id="5759845c2f30352f6a3a4b70c270a383"
+    data-redirect-uri="https://ilandvd.github.io/datamate-test.github.io/pages/oauth-callback.html"
+    data-access-token-storage="session"
+  ></script>
   <script type="text/javascript">
-    function login() {
-    const webIntegrationId = 'YOUR_WEB_INTEGRATION_ID';
-    const loginUrl = 'https://btp-consultants.eu.qlikcloud.com/login';
-    const apiUrl = 'https://btp-consultants.eu.qlikcloud.com/api/v1/users/me';
-    const credentials = {
-      username: 'YOUR_USERNAME',
-      password: 'YOUR_PASSWORD',
-    };
-
-    function isLoggedIn() {
-      return fetch(apiUrl, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'qlik-web-integration-id': webIntegrationId,
-        },
-      }).then(response => {
-        return response.status === 200;
-      });
+    function switchIframe(sheet_id, viewName) {
+      document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
+      document.getElementById('selectedView').textContent = viewName;
     }
-
-    function performLogin() {
-      return fetch(loginUrl, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          'qlik-web-integration-id': webIntegrationId,
-        },
-        body: JSON.stringify(credentials),
-      }).then(response => {
-        if (!response.ok) {
-          throw new Error('Login failed');
-        }
-      });
-    }
-
-    return isLoggedIn().then(loggedIn => {
-      if (!loggedIn) {
-        return performLogin().then(() => {
-          window.top.location.href = "https://btp-consultants.eu.qlikcloud.com?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
-        }).catch(error => {
-          console.error('Login error:', error);
-          throw new Error('not logged in');
-        });
-      }
-    });
-  }
-
-  // Call the login function to initiate login process
-  login();
-  
-    // const webIntegrationId = "MdiY_q8YKZZvqp8Go_AG5DaAhk8f1Gzg";
-
-    // function login() {
-    //   function isLoggedIn() {
-    //     return fetch("https://btp-consultants.eu.qlikcloud.com/api/v1/users/me", {
-    //       method: 'GET',
-    //       mode: 'cors',
-    //       credentials: 'include',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'qlik-web-integration-id': webIntegrationId,
-    //       },
-    //     }).then(response => {
-    //       return response.status === 200;
-    //     });
-    //   }
-    //   return isLoggedIn().then(loggedIn => {
-    //     if (!loggedIn) {
-    //       window.top.location.href = "https://btp-consultants.eu.qlikcloud.com/login?qlik-web-integration-id=" + webIntegrationId + "&returnto=" + top.location.href;
-    //       throw new Error('not logged in');
-    //     }
-    //   });
-    // }
-
-    // function switchIframe(sheet_id, viewName) {
-    //   document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
-    //   document.getElementById('selectedView').textContent = viewName;
-    // }
-
-    // login();
   </script>
 </head>
-
 <body>
   <div class="header">
     <a href="../index.html">
@@ -159,8 +36,6 @@
     <button onclick="switchIframe('NAaJTZQ', 'Autorisation urbanisme')">Autorisation urbanisme</button>
     <button onclick="switchIframe('yJDntY', 'RPLS')">RPLS</button>
   </div>
-  <!-- <iframe id="mainIframe" src="https://btp-consultants.eu.qlikcloud.com/single/?appid=35edaaaa-a600-4970-a7dd-d71c5c0bede3&sheet=jkmQPj&theme=horizon&opt=ctxmenu,currsel"></iframe> -->
   <iframe id="mainIframe" src="https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet=jkmQPj&theme=sense&opt=ctxmenu,currsel"></iframe>
 </body>
-
 </html>
