@@ -57,9 +57,18 @@ button {
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, opacity 0.3s;
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+button.active {
+  background-color: #0056b3;
+  opacity: 1;
+}
+
+button:not(.active) {
+  opacity: 0.5;
 }

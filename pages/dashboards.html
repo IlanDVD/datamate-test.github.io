@@ -17,10 +17,23 @@
     data-access-token-storage="session"
   ></script>
   <script type="text/javascript">
-    function switchIframe(sheet_id, viewName) {
+    function switchIframe(sheet_id, viewName, button) {
       document.getElementById('mainIframe').src = "https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet="+sheet_id+"&theme=sense&opt=ctxmenu,currsel";
       document.getElementById('selectedView').textContent = viewName;
+      
+      // Remove 'active' class from all buttons
+      const buttons = document.querySelectorAll('.button-container button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Add 'active' class to the clicked button
+      button.classList.add('active');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set 'Synthèse' as the default active button
+      const defaultButton = document.querySelector('.button-container button[data-sheet="yJDntY"]');
+      defaultButton.classList.add('active');
+    });
   </script>
 </head>
 <body>
@@ -35,13 +48,13 @@
     <p id="selectedView" class="selected-view">Select a view</p>
   </div>
   <div class="button-container">
-    <button onclick="switchIframe('yJDntY', 'Synthèse')">Synthèse</button>
-    <button onclick="switchIframe('jkmQPj', 'DPE')">DPE</button>
-    <button onclick="switchIframe('NAaJTZQ', 'Autorisation urbanisme')">Autorisation urbanisme</button>
-    <button onclick="switchIframe('yJDntY', 'RPLS')">RPLS</button>
-    <button onclick="switchIframe('jkmQPj', 'Parc immobilier état')">Parc immobilier état</button>
-    <button onclick="switchIframe('NAaJTZQ', 'SIREN')">SIREN</button>
-    <button onclick="switchIframe('NAaJTZQ', 'BOAMP')">BOAMP</button>
+    <button data-sheet="yJDntY" onclick="switchIframe('yJDntY', 'Synthèse', this)">Synthèse</button>
+    <button data-sheet="jkmQPj" onclick="switchIframe('jkmQPj', 'DPE', this)">DPE</button>
+    <button data-sheet="NAaJTZQ" onclick="switchIframe('NAaJTZQ', 'Autorisation urbanisme', this)">Autorisation urbanisme</button>
+    <button data-sheet="yJDntY" onclick="switchIframe('yJDntY', 'RPLS', this)">RPLS</button>
+    <button data-sheet="jkmQPj" onclick="switchIframe('jkmQPj', 'Parc immobilier état', this)">Parc immobilier état</button>
+    <button data-sheet="NAaJTZQ" onclick="switchIframe('NAaJTZQ', 'SIREN', this)">SIREN</button>
+    <button data-sheet="NAaJTZQ" onclick="switchIframe('NAaJTZQ', 'BOAMP', this)">BOAMP</button>
   </div>
   <iframe id="mainIframe" src="https://btp-consultants.eu.qlikcloud.com/single/?appid=89536f44-d98d-446c-b77e-97a7038d2768&sheet=jkmQPj&theme=sense&opt=ctxmenu,currsel"></iframe>
 </body>
