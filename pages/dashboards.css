@@ -46,7 +46,7 @@ body {
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: stretch;
   flex-wrap: wrap;
   padding: 20px;
   background-color: #ffffff;
